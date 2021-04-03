@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from './Header/Header';
 
 const App = () => {
   const course = 'Half Stack application development';
@@ -11,8 +12,8 @@ const App = () => {
 
   return (
     <div className='App'>
-      <h1>{course}</h1>
-      <p>
+      <Header courseTitle={course} />
+      {/* <p>
         {part1} {exercises1}
       </p>
       <p>
@@ -21,7 +22,7 @@ const App = () => {
       <p>
         {part3} {exercises3}
       </p>
-      <p>Number of exercises: {exercises1 + exercises2 + exercises3}</p>
+      <p>Number of exercises: {exercises1 + exercises2 + exercises3}</p> */}
     </div>
   );
 };
