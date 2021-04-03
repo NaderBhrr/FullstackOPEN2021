@@ -1,8 +1,9 @@
 import React from 'react';
+import './Content.css';
 
 const Part = ({ part, noOfExercises }) => (
   <p>
-    {part} {noOfExercises}
+    {part}: <em>{noOfExercises}</em>
   </p>
 );
 
