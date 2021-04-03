@@ -4,7 +4,9 @@ import './Total.css';
 const Total = (props) => (
   <p>
     Number of exercises:{' '}
-    {Object.keys(props).reduce((total, value) => total + props[value], 0)}
+    {props.parts
+      .map((part) => part.exercises)
+      .reduce((total, value) => total + value, 0)}
   </p>
 );
 export default Total;
