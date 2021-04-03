@@ -20,11 +20,11 @@ const App = () => {
           <p>
             <strong>Course Information:</strong>
           </p>
-          <Content part1={part1} part2={part2} part3={part3} />
+          <Content parts={parts} />
           <Total
-            exercises1={part1.exercises}
-            exercises2={part2.exercises}
-            exercises3={part3.exercises}
+            exercises1={parts[0].exercises}
+            exercises2={parts[1].exercises}
+            exercises3={parts[2].exercises}
           />
         </article>
       </main>

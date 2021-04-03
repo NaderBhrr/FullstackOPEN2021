@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Header = ({ courseTitle }) => (
-  <header>
+  <header className='App-header'>
     <h1>{courseTitle}</h1>
   </header>
 );
