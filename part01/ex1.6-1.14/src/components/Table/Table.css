@@ -1,0 +1,6 @@
+table td {
+  color: orange;
+  border: 2px solid chocolate;
+  border-color: chocolate;
+  padding: 5px;
+}
