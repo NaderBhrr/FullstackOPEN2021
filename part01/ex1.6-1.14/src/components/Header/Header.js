@@ -1,9 +1,5 @@
 import React from 'react';
+import './Header.css';
 
-const Header = ({ courseTitle }) => (
-  <header className='App-header'>
-    <h1>{courseTitle}</h1>
-  </header>
-);
-
+const Header = ({ text }) => <h2>{text}</h2>;
 export default Header;

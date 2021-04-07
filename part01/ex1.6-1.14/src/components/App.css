@@ -1,43 +1,65 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid green;
+  background-color: whitesmoke;
+}
+
+.MenuWrap {
+  background-color: indigo;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.ListItem,
+.LastItem {
+  color: #ebebeb;
+  text-decoration: none;
+}
+.ListItem {
+  margin-right: 1rem;
+}
+.LastItem {
+  margin-left: auto;
+}
+
 .App {
-  text-align: center;
-  border: 3px solid #282c34;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #576574;
-  min-height: 10vh;
+  font-family: 'Oswald', sans-serif;
+  border: 1px solid red;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-top: 25px;
 }
 
-.App main article {
-  color: #1e3799;
+.rating-stats {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding-left: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button {
+  padding: 5px 10px;
+  background-color: indigo;
+  outline: none;
+  margin: 0 3px;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.75em;
+}
+
+button:hover {
+  font-size: 15px;
+  transition: transform 0.3s;
 }
