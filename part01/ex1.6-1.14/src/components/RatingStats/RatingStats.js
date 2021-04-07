@@ -1,9 +1,10 @@
 import React from 'react';
+import './RatingStats.css';
 
-const RatingStats = ({ text, totalFeedback }) => {
+const RatingStats = ({ text, value }) => {
   return (
     <span>
-      {text}: {totalFeedback}
+      {text}: <i>{value}</i>
     </span>
   );
 };

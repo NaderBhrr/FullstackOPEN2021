@@ -7,59 +7,18 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid green;
   background-color: whitesmoke;
-}
-
-.MenuWrap {
-  background-color: indigo;
-  font-family: 'Oswald', sans-serif;
-  font-size: 1rem;
-  min-height: 2.75rem;
-  display: flex;
-  align-items: center;
-  padding: 0 1rem;
-}
-
-.ListItem,
-.LastItem {
-  color: #ebebeb;
-  text-decoration: none;
-}
-.ListItem {
-  margin-right: 1rem;
-}
-.LastItem {
-  margin-left: auto;
 }
 
 .App {
   font-family: 'Oswald', sans-serif;
-  border: 1px solid red;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 25px;
-}
-
-.rating-stats {
-  display: flex;
-  flex-direction: column;
-}
-
-button {
-  padding: 5px 10px;
-  background-color: indigo;
-  outline: none;
-  margin: 0 3px;
-  color: white;
-  font-weight: bold;
-  border: none;
+  border: 3px solid rgb(132, 29, 201);
   border-radius: 0.75em;
-}
-
-button:hover {
-  font-size: 15px;
-  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 17px;
+  padding: 15px 20px;
+  background-color: lightcyan;
 }
