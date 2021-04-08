@@ -1,6 +1,8 @@
 import React from 'react';
 import './RatingButton.css';
 
-const RatingButton = ({ text }) => <button>{text}</button>;
+const RatingButton = ({ text, handleRatingsStats }) => (
+  <button onClick={handleRatingsStats}>{text}</button>
+);
 
 export default RatingButton;

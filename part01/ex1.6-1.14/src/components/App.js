@@ -4,6 +4,8 @@ import Header from './Header/Header';
 import RatingButton from './RatingButton/RatingButton';
 import RatingStats from './RatingStats/RatingStats';
 import NavBar from './NavBar/NavBar';
+import Table from './Table/Table';
+
 const App = () => {
   const [goodRate, setGoodRate] = useState(0);
   const [badRate, setBadRate] = useState(0);
@@ -17,13 +19,25 @@ const App = () => {
 
   const positiveFeedback = totalFeedback === 0 ? 0 : goodRate / totalFeedback;
 
+  const handleFeedback = (ratingText) => (_event) =>
+    ratingText === 'Good'
+      ? setGoodRate(goodRate + 1)
+      : ratingText === 'Neutral'
+      ? setNeutralRate(neutralRate + 1)
+      : ratingText === 'Bad'
+      ? setBadRate(badRate + 1)
+      : null;
+
   return (
     <>
       <NavBar />
       <main className='App '>
-        <Header text='Give Feedback' size={4} />
+        <Header text='Give Feedback' />
         <span className='buttons'>
-          <RatingButton text='Good' />
+          <RatingButton
+            text='Good'
+            handleRatingsStats={handleFeedback('Good')}
+          />
           <RatingButton text='Neutral' />
           <RatingButton text='Bad' />
         </span>
@@ -39,6 +53,12 @@ const App = () => {
             <RatingStats text='Positive Feedback' value={positiveFeedback} />
           </div>
         </section>
+        <Table
+          goodRate={goodRate || 0}
+          neutralRate={neutralRate || 0}
+          badRate={badRate || 0}
+          averageScore={averageScore || 0}
+        />
       </main>
     </>
   );

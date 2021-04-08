@@ -1,6 +1,19 @@
+table {
+  color: blueviolet;
+  border: 2px solid indigo;
+  padding: 5px;
+  margin: 10px 0;
+  border-bottom-width: 12px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+thead {
+  text-align: center;
+  font-weight: bolder;
+}
+
 table td {
-  color: orange;
-  border: 2px solid chocolate;
-  border-color: chocolate;
+  border: 2px solid darkred;
   padding: 5px;
 }

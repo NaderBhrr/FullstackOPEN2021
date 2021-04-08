@@ -1,35 +1,27 @@
 import React from 'react';
 import './Table.css';
 
-const Table = () => {
+const TableRow = ({ text, value }) => {
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+  );
+};
+
+const Table = ({ ...props }) => {
+  const { goodRate, neutralRate, badRate, averageScore } = props;
   return (
     <table>
-      <thead></thead>
+      <thead>Statistics</thead>
       <tbody>
-        <tr>
-          <td>Good</td>
-          <td>5</td>
-        </tr>
-        <tr>
-          <td>Neutral</td>
-          <td>2</td>
-        </tr>
-        <tr>
-          <td>Bad</td>
-          <td>3</td>
-        </tr>
-        <tr>
-          <td>Total Feedback</td>
-          <td>1</td>
-        </tr>
-        <tr>
-          <td>Average</td>
-          <td>1</td>
-        </tr>
-        <tr>
-          <td>Positive Feedback</td>
-          <td>3</td>
-        </tr>
+        <TableRow text='Good' value={goodRate} />
+        <TableRow text='Neutral' value={neutralRate} />
+        <TableRow text='Bad' value={badRate} />
+        <TableRow text='Total Feedback' value={5} />
+        <TableRow text='Average' value={averageScore} />
+        <TableRow text='Positive Feedback' value={5} />
       </tbody>
     </table>
   );
