@@ -1,0 +1,17 @@
+.buttons {
+  padding: 10px 0;
+}
+button {
+  padding: 5px 10px;
+  background-color: indigo;
+  outline: none;
+  margin: 0 3px;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.75em;
+}
+
+button:hover {
+  background-color: chocolate;
+}
