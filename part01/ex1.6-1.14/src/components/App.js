@@ -11,13 +11,19 @@ const App = () => {
   const [badRate, setBadRate] = useState(0);
   const [neutralRate, setNeutralRate] = useState(0);
 
+  const formatValue = (value) => Number(value.toFixed(2));
+
+  // Feedback Values
   const totalFeedback = goodRate + neutralRate + badRate;
   const averageScore =
     totalFeedback === 0
       ? 0
-      : (goodRate * 1 + neutralRate * 0 + badRate * -1) / totalFeedback;
+      : formatValue(
+          (goodRate * 1 + neutralRate * 0 + badRate * -1) / totalFeedback
+        );
 
-  const positiveFeedback = totalFeedback === 0 ? 0 : goodRate / totalFeedback;
+  const positiveFeedback =
+    totalFeedback === 0 ? 0 : formatValue(goodRate / totalFeedback);
 
   const handleFeedback = (ratingText) => (_event) =>
     ratingText === 'Good'
@@ -38,8 +44,11 @@ const App = () => {
             text='Good'
             handleRatingsStats={handleFeedback('Good')}
           />
-          <RatingButton text='Neutral' />
-          <RatingButton text='Bad' />
+          <RatingButton
+            text='Neutral'
+            handleRatingsStats={handleFeedback('Neutral')}
+          />
+          <RatingButton text='Bad' handleRatingsStats={handleFeedback('Bad')} />
         </span>
         <span>{totalFeedback ? null : `No feedback is given yet`}</span>
         <section className={totalFeedback ? 'rating-stats' : 'hidden'}>
@@ -57,7 +66,9 @@ const App = () => {
           goodRate={goodRate || 0}
           neutralRate={neutralRate || 0}
           badRate={badRate || 0}
+          totalFeedback={totalFeedback || 0}
           averageScore={averageScore || 0}
+          positiveFeedback={positiveFeedback || 0}
         />
       </main>
     </>

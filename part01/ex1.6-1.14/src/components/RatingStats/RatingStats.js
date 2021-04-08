@@ -4,7 +4,7 @@ import './RatingStats.css';
 const RatingStats = ({ text, value }) => {
   return (
     <span>
-      {text}: <i>{value}</i>
+      {text}: <i>{text === 'Positive Feedback' ? `${value} %` : value}</i>
     </span>
   );
 };
