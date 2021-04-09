@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from './Button/Button';
 import './App.css';
 
 const App = () => {
@@ -13,8 +14,21 @@ const App = () => {
 
   const [anecdoteIndex, setAnecdoteIndex] = useState(null);
 
+  const createRandomNumber = (array) =>
+    Math.floor(Math.random() * array.length);
+
+  const displayAnecdote = (event) => {
+    if (event.target.nodeType === 1) {
+      setAnecdoteIndex(createRandomNumber(anecdotes));
+    }
+  };
+
   return (
-    <div className='App'>{anecdotes[anecdoteIndex ? anecdoteIndex : 0]}</div>
+    <div className='App'>
+      <Button handleClick={displayAnecdote} />
+      <br />
+      {anecdotes[anecdoteIndex ? anecdoteIndex : 0]}
+    </div>
   );
 };
 
