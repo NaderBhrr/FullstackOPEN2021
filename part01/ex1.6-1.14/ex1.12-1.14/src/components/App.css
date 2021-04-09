@@ -2,27 +2,57 @@
   margin: 0;
   padding: 0;
 }
-
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
 body #root {
-  border: 1px solid pink;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .App {
-  border: 3px solid green;
-
-  width: 80%;
+  width: 40%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 30px;
+  border: 3px solid indigo;
+  border-top-width: 30px;
+  border-radius: 1em 1em 0 0;
 }
 
+.buttons {
+  padding: auto;
+  display: flex;
+}
 .App button {
-  width: 15%;
+  width: 95%;
   border: none;
   border-radius: 1rem;
-  margin: 5px 0;
-  padding: 5px 0;
+  margin: 5px;
+  padding: 5px 20px;
+  font-size: 1em;
+  font-weight: bolder;
+  color: #f8f2fa;
+  background-color: #b478d0;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+button:hover {
+  background-color: #d07882;
+}
+
+.anecdote-text {
+  color: blue;
+  text-align: center;
+}
+
+@media all and (max-width: 500px) {
 }

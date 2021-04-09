@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Button from './Button/Button';
+import Header from './Header/Header';
 import './App.css';
 
 const App = () => {
@@ -27,26 +28,42 @@ const App = () => {
   // Is an object a better choice for state?
   const upvoteAnecdote = (_event) => {
     !anecdoteVotes.hasOwnProperty(anecdoteIndex)
-      ? setAnecdoteVotes({ ...anecdoteVotes, [anecdoteIndex]: 1 })
+      ? setAnecdoteVotes({
+          ...anecdoteVotes,
+          [anecdoteIndex]: [1, anecdotes[anecdoteIndex]],
+        })
       : setAnecdoteVotes({
           ...anecdoteVotes,
-          [anecdoteIndex]: anecdoteVotes[anecdoteIndex] + 1,
+          [anecdoteIndex]: [
+            anecdoteVotes[anecdoteIndex][0] + 1,
+            anecdotes[anecdoteIndex],
+          ],
         });
   };
 
   return (
     <div className='App'>
-      {(() => {
-        console.log(anecdoteVotes);
-      })()}
-      <Button buttonText='Display Anecdote' handleClick={displayAnecdote} />
-      <Button buttonText='Vote for Anecdote' handleClick={upvoteAnecdote} />
-      <br />
-      {anecdotes[anecdoteIndex ? anecdoteIndex : 0]}
+      <Header text='Anecdote of the Day' />
+      <span className='anecdote-text'>
+        {anecdotes[anecdoteIndex ? anecdoteIndex : 0]}
+      </span>
       <p>
         The above anecdote has{' '}
-        {anecdoteVotes[anecdoteIndex] ? anecdoteVotes[anecdoteIndex] : 0} votes
+        {anecdoteVotes[anecdoteIndex] ? anecdoteVotes[anecdoteIndex][0] : 0}{' '}
+        votes
       </p>
+      <div className='buttons'>
+        <Button buttonText='Display Anecdote' handleClick={displayAnecdote} />
+        <Button buttonText='Vote for Anecdote' handleClick={upvoteAnecdote} />
+      </div>
+      <Header text='Anecdote with Most Votes' />
+      <span>
+        {Object.keys(anecdoteVotes).length === 0
+          ? null
+          : Object.entries(anecdoteVotes)
+              .map(([_key, value]) => value)
+              .sort((a, b) => b[0] - a[0])[0][1]}
+      </span>
     </div>
   );
 };
