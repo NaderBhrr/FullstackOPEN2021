@@ -12,7 +12,8 @@ const App = () => {
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
   ];
 
-  const [anecdoteIndex, setAnecdoteIndex] = useState(null);
+  const [anecdoteIndex, setAnecdoteIndex] = useState(0);
+  const [anecdoteVotes, setAnecdoteVotes] = useState({});
 
   const createRandomNumber = (array) =>
     Math.floor(Math.random() * array.length);
@@ -23,11 +24,29 @@ const App = () => {
     }
   };
 
+  // Is an object a better choice for state?
+  const upvoteAnecdote = (_event) => {
+    !anecdoteVotes.hasOwnProperty(anecdoteIndex)
+      ? setAnecdoteVotes({ ...anecdoteVotes, [anecdoteIndex]: 1 })
+      : setAnecdoteVotes({
+          ...anecdoteVotes,
+          [anecdoteIndex]: anecdoteVotes[anecdoteIndex] + 1,
+        });
+  };
+
   return (
     <div className='App'>
-      <Button handleClick={displayAnecdote} />
+      {(() => {
+        console.log(anecdoteVotes);
+      })()}
+      <Button buttonText='Display Anecdote' handleClick={displayAnecdote} />
+      <Button buttonText='Vote for Anecdote' handleClick={upvoteAnecdote} />
       <br />
       {anecdotes[anecdoteIndex ? anecdoteIndex : 0]}
+      <p>
+        The above anecdote has{' '}
+        {anecdoteVotes[anecdoteIndex] ? anecdoteVotes[anecdoteIndex] : 0} votes
+      </p>
     </div>
   );
 };
