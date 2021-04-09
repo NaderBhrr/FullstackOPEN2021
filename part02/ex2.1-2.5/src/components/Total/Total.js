@@ -3,7 +3,7 @@ import './Total.css';
 
 const Total = (props) => (
   <p>
-    Number of exercises:{' '}
+    Total number of exercises:{' '}
     {props.course.parts
       .map((part) => part.exercises)
       .reduce((total, value) => total + value, 0)}
