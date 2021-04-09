@@ -1,6 +1,6 @@
-import Header from '../Header/Header';
-import Content from '../Content/Content';
-import Total from '../Total/Total';
+import Header from './Header/Header';
+import Content from './Content/Content';
+import Total from './Total/Total';
 
 const Course = ({ course }) => (
   <>
