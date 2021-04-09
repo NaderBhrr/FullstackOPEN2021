@@ -1,17 +1,20 @@
 import React from 'react';
 import './Content.css';
 
-const Part = ({ part, noOfExercises }) => (
-  <p>
-    {part}: <em>{noOfExercises}</em>
-  </p>
-);
+const Part = (props) => {
+  const { name, exercises } = props.part;
+  return (
+    <p>
+      {name}: <em>{exercises}</em>
+    </p>
+  );
+};
 
-const Content = (props) => (
+const Content = ({ course }) => (
   <>
-    <Part part={props.part1} noOfExercises={props.exercises1} />
-    <Part part={props.part2} noOfExercises={props.exercises2} />
-    <Part part={props.part3} noOfExercises={props.exercises3} />
+    {course.parts.map((part) => (
+      <Part key={part.id} part={part} />
+    ))}
   </>
 );
 
