@@ -2,10 +2,27 @@ import React, { useState } from 'react';
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', phoneNumber: '2367492' },
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' },
   ]);
   const [newName, setNewName] = useState('');
   const [newPhoneNumber, setNewPhoneNumber] = useState('');
+  const [foundContact, setFoundContact] = useState('');
+
+  const handleSearchPhonebook = (event) => {
+    if (event.key === 'Enter') {
+      const searchValue = event.target.value;
+      setFoundContact(
+        persons.find(
+          (person) => person.name.toLowerCase() === searchValue.toLowerCase()
+        )
+      );
+    }
+
+    return;
+  };
 
   const AddNewContact = (event) => {
     event.preventDefault();
@@ -45,20 +62,31 @@ const App = () => {
   };
 
   const handleNewContact = (event) => {
-    console.log(event.target.value);
-    console.log(event.target.value === '');
     setNewName(event.target.value);
   };
 
   const handleNewPhoneNumber = (event) => {
-    console.log(event.target.value);
     setNewPhoneNumber(event.target.value);
   };
 
   return (
     <div>
-      {/* <div>{(() => console.log(persons))()}</div> */}
       <h2>Phonebook</h2>
+      <div>
+        <h4>Search Phonebook:</h4>
+        <input
+          type='search'
+          name='search'
+          plsceholder='Search a contact number'
+          onKeyDown={handleSearchPhonebook}
+        />
+        <span>
+          {foundContact
+            ? `The contact you searched is found:\n ${foundContact.name}`
+            : `No result found`}
+        </span>
+      </div>
+
       <form onSubmit={AddNewContact}>
         <div>
           name:{' '}
