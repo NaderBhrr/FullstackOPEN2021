@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import SearchPhonebook from './SearchPhonebook/SearchPhonebook';
+import ContactList from './ContactsList/ContactList';
+import AddContactForm from './AddContactForm/AddContactForm';
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -24,7 +27,7 @@ const App = () => {
     return;
   };
 
-  const AddNewContact = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     console.log('new Contact: ', newName);
 
@@ -55,7 +58,7 @@ const App = () => {
       return;
     }
 
-    setPersons(persons.concat({ name: newName, phoneNumber: newPhoneNumber }));
+    setPersons(persons.concat({ name: newName, number: newPhoneNumber }));
 
     setNewName('');
     setNewPhoneNumber('');
@@ -70,26 +73,22 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className='App'>
       <h2>Phonebook</h2>
-      <div>
-        <h4>Search Phonebook:</h4>
-        <input
-          type='search'
-          name='search'
-          plsceholder='Search a contact number'
-          onKeyDown={handleSearchPhonebook}
-        />
-        <span>
-          {foundContact
-            ? `The contact you searched is found:\n ${foundContact.name}`
-            : `No result found`}
-        </span>
-      </div>
-
-      <form onSubmit={AddNewContact}>
+      <SearchPhonebook
+        handleSearch={handleSearchPhonebook}
+        foundContact={foundContact}
+      />
+      <AddContactForm
+        handleSubmit={handleSubmit}
+        newName={newName}
+        handleNewContact={handleNewContact}
+        newPhoneNumber={newPhoneNumber}
+        handleNewPhoneNumber={handleNewPhoneNumber}
+      />
+      <ContactList persons={persons} />
+      <form onSubmit={handleSubmit}>
         <div>
-          name:{' '}
           <input type='text' value={newName} onChange={handleNewContact} />
         </div>
         <div>
@@ -104,14 +103,6 @@ const App = () => {
           <button type='submit'>Add</button>
         </div>
       </form>
-      <h2>Contact Information:</h2>
-      <ul>
-        {persons.map((person, index) => (
-          <li key={index}>
-            {person.name} <div>&nbsp;{person.phoneNumber}</div>{' '}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
