@@ -29,7 +29,6 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('new Contact: ', newName);
 
     // Error handling conditions
     if (/\W|\d/g.test(newName)) {
@@ -87,22 +86,6 @@ const App = () => {
         handleNewPhoneNumber={handleNewPhoneNumber}
       />
       <ContactList persons={persons} />
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input type='text' value={newName} onChange={handleNewContact} />
-        </div>
-        <div>
-          Contact Number:
-          <input
-            type='text'
-            value={newPhoneNumber}
-            onChange={handleNewPhoneNumber}
-          />
-        </div>
-        <div>
-          <button type='submit'>Add</button>
-        </div>
-      </form>
     </div>
   );
 };
