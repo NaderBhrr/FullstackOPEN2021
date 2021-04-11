@@ -31,7 +31,7 @@ const App = () => {
     event.preventDefault();
 
     // Error handling conditions
-    if (/\W|\d/g.test(newName)) {
+    if (/[^\w\s]/g.test(newName)) {
       alert(`${newName} is not a valid entry please try again`);
       setNewName('');
       setNewPhoneNumber('');
