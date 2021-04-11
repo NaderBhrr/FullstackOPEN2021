@@ -11,7 +11,9 @@ const searchPhonebook = ({ handleSearch, foundContact }) => {
         onKeyDown={handleSearch}
       />
       <span>
-        {foundContact
+        {foundContact === ''
+          ? null
+          : foundContact
           ? `The contact you searched is found:\n ${foundContact.name}`
           : `No result found`}
       </span>
