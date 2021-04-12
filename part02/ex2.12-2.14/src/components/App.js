@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Searchbar from './Searchbar/Searchbar';
 import Button from './Button/Button';
+import SearchMessage from './SearchMessage/SearchMessage';
 import axios from 'axios';
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
         value={searchingCountry}
       />
       <Button text='Search Countries' startSearch={searchCountries} />
+      <SearchMessage data={foundCountries} />
     </div>
   );
 };
