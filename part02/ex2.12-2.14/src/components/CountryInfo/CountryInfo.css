@@ -1,0 +1,11 @@
+img {
+  height: 12%;
+  width: 12%;
+  animation: doWave 5s infinite linear;
+}
+
+/* @keyframe doWave {
+  to {
+    transform
+  }
+} */

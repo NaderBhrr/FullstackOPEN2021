@@ -1,4 +1,5 @@
 import React from 'react';
+import CountryInfo from '../CountryInfo/CountryInfo';
 
 const SearchMessage = ({ data }) => (
   <div>
@@ -10,7 +11,9 @@ const SearchMessage = ({ data }) => (
           <li key={country.alpha2Code}>{country.name}</li>
         ))}
       </ul>
-    ) : data.length === 1 ? null : null}
+    ) : data.length === 1 ? (
+      <CountryInfo country={data} />
+    ) : null}
   </div>
 );
 
