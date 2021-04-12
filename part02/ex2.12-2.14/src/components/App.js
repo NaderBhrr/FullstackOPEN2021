@@ -35,7 +35,7 @@ const App = () => {
         onChange={(event) => setSearchingCountry(event.target.value)}
         value={searchingCountry}
       />
-      <Button text='Search Countries' startSearch={searchCountries} />
+      <Button text='Search Countries' handleAction={searchCountries} />
       <SearchMessage data={foundCountries} />
     </div>
   );
