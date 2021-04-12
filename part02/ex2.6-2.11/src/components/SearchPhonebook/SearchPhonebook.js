@@ -7,7 +7,7 @@ const searchPhonebook = ({ handleSearch, foundContact }) => {
       <input
         type='search'
         name='search'
-        plsceholder='Search a contact number'
+        placeholder='Search a contact number'
         onKeyDown={handleSearch}
       />
       <span>
