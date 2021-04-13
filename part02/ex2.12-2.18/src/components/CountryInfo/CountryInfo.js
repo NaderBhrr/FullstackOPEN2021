@@ -1,4 +1,6 @@
 import React from 'react';
+import Header from '../Header/Header';
+import CountryWeather from '../CountryWeather/CountryWeather';
 import './CountryInfo.css';
 
 const CountryInfo = ({ country }) => {
@@ -6,7 +8,7 @@ const CountryInfo = ({ country }) => {
     country instanceof Array ? country[0] : country;
   return (
     <div>
-      <h2>{name}</h2>
+      <Header text={name} />
       <p>Capital: {capital}</p>
       <p>Population: {population}</p>
       <h3>Spoken Languags:</h3>
@@ -16,6 +18,8 @@ const CountryInfo = ({ country }) => {
         ))}
       </ul>
       <img src={flag} alt={alpha3Code} />
+
+      <CountryWeather city={capital} />
     </div>
   );
 };
