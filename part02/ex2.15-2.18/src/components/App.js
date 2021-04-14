@@ -3,6 +3,7 @@ import SearchPhonebook from './SearchPhonebook/SearchPhonebook';
 import ContactList from './ContactsList/ContactList';
 import AddContactForm from './AddContactForm/AddContactForm';
 import axios from 'axios';
+import phonebookRecerd from '../server/server';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,10 +12,7 @@ const App = () => {
   const [searchContact, setSearchContact] = useState({});
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3001/persons`)
-      .then((response) => response.data)
-      .then((data) => setPersons(data));
+    phonebookRecerd.getPersons((data) => setPersons(data));
   }, []);
 
   const handleSearchPhonebook = (event) => {
