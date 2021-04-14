@@ -78,6 +78,15 @@ const App = () => {
     setNewPhoneNumber(event.target.value);
   };
 
+  const handleDeleteContact = (id, person) => {
+    if (window.confirm(`Are you sure to detele the ${person}?`))
+      phonebookRecerd.deletePerson(id).then(() => {
+        phonebookRecerd.getPersons((data) => setPersons(data));
+      });
+
+    return;
+  };
+
   return (
     <div className='App'>
       <h2>Phonebook</h2>
@@ -92,7 +101,7 @@ const App = () => {
         newPhoneNumber={newPhoneNumber}
         handleNewPhoneNumber={handleNewPhoneNumber}
       />
-      <ContactList persons={persons} />
+      <ContactList persons={persons} deleteContact={handleDeleteContact} />
     </div>
   );
 };

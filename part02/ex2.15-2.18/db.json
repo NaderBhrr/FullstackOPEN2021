@@ -1,44 +1,14 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
+      "name": "bahrami azimi",
+      "number": "32-98-3695401",
       "id": 2
     },
     {
-      "name": "Dan Abramov",
-      "number": "12-43-234345",
-      "id": 3
-    },
-    {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
+      "name": "hossein aliani",
+      "number": "21-02-9872132",
       "id": 4
-    },
-    {
-      "name": "amin gholami",
-      "number": "12-98-3659874",
-      "id": 5
-    },
-    {
-      "name": "nader bahrami",
-      "number": "21-96-3652134",
-      "id": 6
-    },
-    {
-      "name": "Ali Mazaheri",
-      "number": "30-36-3698720",
-      "id": 7
-    },
-    {
-      "name": "Jaber behani",
-      "number": "32-65-9874563",
-      "id": 8
     }
   ]
 }
