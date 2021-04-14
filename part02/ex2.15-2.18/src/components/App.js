@@ -40,7 +40,7 @@ const App = () => {
       return;
     }
     if (!/\d/g.test(newPhoneNumber)) {
-      alert(`${newPhoneNumber} is not a valid entry please try again`);
+      alert(`${newPhoneNumber} is not a valid entry. Please try again`);
       setNewName('');
       setNewPhoneNumber('');
 
@@ -51,23 +51,54 @@ const App = () => {
         (person) => person.name.toLowerCase() !== newName.toLowerCase()
       )
     ) {
-      alert(`${newName} already exists in the phonebook`);
-      setNewName('');
-      setNewPhoneNumber('');
+      if (!persons.every((person) => person.number !== newPhoneNumber)) {
+        console.log('already true');
+        alert(`${newName} already exists in the phonebook`);
+        setNewName('');
+        setNewPhoneNumber('');
+        return;
+      }
+      const updatedContact = {
+        ...persons.find((person) => person.name === newName),
+        number: newPhoneNumber,
+      };
+      if (
+        window.confirm(
+          `${updatedContact.name} is already added to the phonebook, do you want to update old number with a new number?`
+        )
+      ) {
+        phonebookRecerd.updatePerson(updatedContact, (data) =>
+          setPersons(
+            persons.map((person) => (person.id === data.id ? data : person))
+          )
+        );
 
-      return;
+        return;
+      } else {
+        setNewName('');
+        setNewPhoneNumber('');
+      }
     }
 
+    if (
+      !persons.every(
+        (person) =>
+          person.name.toLowerCase() !== newName.toLowerCase() &&
+          person.number === newPhoneNumber
+      )
+    ) {
+    }
     phonebookRecerd.addPerson(
       {
         name: newName,
         number: newPhoneNumber,
       },
-      (data) => setPersons(persons.concat(data))
+      (data) => {
+        setPersons(persons.concat(data));
+        setNewName('');
+        setNewPhoneNumber('');
+      }
     );
-
-    setNewName('');
-    setNewPhoneNumber('');
   };
 
   const handleNewContact = (event) => {

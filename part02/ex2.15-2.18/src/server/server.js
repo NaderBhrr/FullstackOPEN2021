@@ -19,10 +19,17 @@ const deletePerson = (contactID, cb) =>
     .then((response) => response.data)
     .then(() => cb());
 
+const updatePerson = (updatedPerson, cb) =>
+  axios
+    .put(`${baseUrl}/${updatedPerson.id}`, updatedPerson)
+    .then((response) => response.data)
+    .then((data) => cb(data));
+
 const phonebookRecerd = {
   getPersons,
   addPerson,
   deletePerson,
+  updatePerson,
 };
 
 export default phonebookRecerd;
