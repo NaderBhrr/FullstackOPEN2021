@@ -8,7 +8,7 @@ const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newPhoneNumber, setNewPhoneNumber] = useState('');
-  const [foundContact, setFoundContact] = useState();
+  const [searchContact, setSearchContact] = useState({});
 
   useEffect(() => {
     axios
@@ -20,11 +20,12 @@ const App = () => {
   const handleSearchPhonebook = (event) => {
     if (event.key === 'Enter') {
       const searchValue = event.target.value;
-      setFoundContact(
-        persons.find(
+      setSearchContact({
+        searchValue,
+        searchResult: persons.find(
           (person) => person.name.toLowerCase() === searchValue.toLowerCase()
-        )
-      );
+        ),
+      });
     }
 
     return;
@@ -60,8 +61,13 @@ const App = () => {
       return;
     }
 
-    setPersons(persons.concat({ name: newName, number: newPhoneNumber }));
-
+    axios
+      .post(`http://localhost:3001/persons`, {
+        name: newName,
+        number: newPhoneNumber,
+      })
+      .then((response) => response.data)
+      .then((data) => setPersons(persons.concat(data)));
     setNewName('');
     setNewPhoneNumber('');
   };
@@ -79,7 +85,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <SearchPhonebook
         handleSearch={handleSearchPhonebook}
-        foundContact={foundContact}
+        searchContact={searchContact}
       />
       <AddContactForm
         handleSubmit={handleSubmit}
