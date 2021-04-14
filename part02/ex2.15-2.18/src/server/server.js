@@ -7,8 +7,15 @@ const getPersons = (cb) =>
     .then((response) => response.data)
     .then((data) => cb(data));
 
+const addPerson = (newPerson, cb) =>
+  axios
+    .post(baseUrl, newPerson)
+    .then((response) => response.data)
+    .then((data) => cb(data));
+
 const phonebookRecerd = {
   getPersons,
+  addPerson,
 };
 
 export default phonebookRecerd;

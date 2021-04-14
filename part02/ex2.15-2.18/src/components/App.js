@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import SearchPhonebook from './SearchPhonebook/SearchPhonebook';
 import ContactList from './ContactsList/ContactList';
 import AddContactForm from './AddContactForm/AddContactForm';
-import axios from 'axios';
 import phonebookRecerd from '../server/server';
 
 const App = () => {
@@ -59,13 +58,13 @@ const App = () => {
       return;
     }
 
-    axios
-      .post(`http://localhost:3001/persons`, {
+    phonebookRecerd.addPerson(
+      {
         name: newName,
         number: newPhoneNumber,
-      })
-      .then((response) => response.data)
-      .then((data) => setPersons(persons.concat(data)));
+      },
+      (data) => setPersons(persons.concat(data))
+    );
 
     setNewName('');
     setNewPhoneNumber('');
