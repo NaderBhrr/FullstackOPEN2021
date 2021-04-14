@@ -80,7 +80,7 @@ const App = () => {
 
   const handleDeleteContact = (id, person) => {
     if (window.confirm(`Are you sure to detele the ${person}?`))
-      phonebookRecerd.deletePerson(id).then(() => {
+      phonebookRecerd.deletePerson(id, () => {
         phonebookRecerd.getPersons((data) => setPersons(data));
       });
 

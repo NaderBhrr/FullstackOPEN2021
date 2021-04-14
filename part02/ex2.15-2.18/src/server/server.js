@@ -13,8 +13,11 @@ const addPerson = (newPerson, cb) =>
     .then((response) => response.data)
     .then((data) => cb(data));
 
-const deletePerson = (contactID) =>
-  axios.delete(`${baseUrl}/${contactID}`).then((response) => response.data);
+const deletePerson = (contactID, cb) =>
+  axios
+    .delete(`${baseUrl}/${contactID}`)
+    .then((response) => response.data)
+    .then(() => cb());
 
 const phonebookRecerd = {
   getPersons,
