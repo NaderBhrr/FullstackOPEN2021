@@ -68,6 +68,7 @@ const App = () => {
       })
       .then((response) => response.data)
       .then((data) => setPersons(persons.concat(data)));
+
     setNewName('');
     setNewPhoneNumber('');
   };
