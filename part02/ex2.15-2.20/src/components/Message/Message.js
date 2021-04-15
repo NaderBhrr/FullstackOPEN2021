@@ -1,13 +1,19 @@
 import React from 'react';
 import './Message.css';
 
-const Message = ({ action }) => {
+const Message = ({ action, error }) => {
   if (action === null) return null;
 
   const messages = {
-    addPerson: 'New contact is added to the phonebook',
-    changeNumber: 'The contact phone number updated',
-    deletePerson: 'Contact deleted from the phonebook successfully',
+    CRUD: {
+      addPerson: 'New contact is added to the phonebook',
+      changeNumber: 'The contact phone number updated',
+      deletePerson:
+        'Contact successfully deleted from the phonebook successfully',
+    },
+    errors: {
+      deletePerson: 'The contact is already removed from the phonebook',
+    },
   };
 
   const messageStyle =
@@ -21,12 +27,17 @@ const Message = ({ action }) => {
 
   return (
     <div className={messageStyle}>
-      {action === 'add'
-        ? messages.addPerson
+      <span className='.error general'>
+        {error ? messages.errors.deletePerson : null}
+      </span>
+      {error
+        ? null
+        : action === 'add'
+        ? messages.CRUD.addPerson
         : action === 'update'
-        ? messages.changeNumber
+        ? messages.CRUD.changeNumber
         : action === 'delete'
-        ? messages.deletePerson
+        ? messages.CRUD.deletePerson
         : null}
     </div>
   );

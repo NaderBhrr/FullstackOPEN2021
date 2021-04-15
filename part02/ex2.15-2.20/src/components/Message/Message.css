@@ -15,7 +15,8 @@
   border: 2px solid lightskyblue;
 }
 
-.delete {
+.delete,
+.error {
   color: red;
   border: 2px solid red;
 }

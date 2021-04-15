@@ -11,6 +11,7 @@ const App = () => {
   const [newPhoneNumber, setNewPhoneNumber] = useState('');
   const [searchContact, setSearchContact] = useState({});
   const [actionMessage, setActionMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     phonebookRecerd.getPersons((data) => setPersons(data));
@@ -130,9 +131,21 @@ const App = () => {
 
   const handleDeleteContact = (id, person) => {
     if (window.confirm(`Are you sure to detele the ${person}?`))
-      phonebookRecerd.deletePerson(id, () => {
-        phonebookRecerd.getPersons((data) => setPersons(data));
-      });
+      phonebookRecerd.deletePerson(
+        id,
+        () => {
+          phonebookRecerd.getPersons((data) => setPersons(data));
+        },
+        (error) => {
+          setErrorMessage(`deleteError`);
+          setPersons(persons.filter((person) => person.id !== id));
+          console.error(error.message);
+
+          setTimeout(() => {
+            setActionMessage(null);
+          }, 5000);
+        }
+      );
     setActionMessage('delete');
     setTimeout(() => {
       setActionMessage(null);
@@ -144,7 +157,7 @@ const App = () => {
   return (
     <div className='App'>
       <h2>Phonebook</h2>
-      <Message action={actionMessage} />
+      <Message action={actionMessage} error={errorMessage} />
       <SearchPhonebook
         handleSearch={handleSearchPhonebook}
         searchContact={searchContact}
