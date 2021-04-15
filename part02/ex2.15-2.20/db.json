@@ -1,39 +1,14 @@
 {
   "persons": [
     {
-      "name": "hossein samani",
-      "number": "21-03-9876514",
-      "id": 4
-    },
-    {
       "name": "sima rezai",
-      "number": "21-02-9123254",
+      "number": "32-65-9543626",
       "id": 5
     },
     {
-      "name": "ali amini",
-      "number": "01-36-1204563",
+      "name": "ali ramzi",
+      "number": "32-32-6598744",
       "id": 6
-    },
-    {
-      "name": "ali rezai",
-      "number": "36-98-3620104",
-      "id": 7
-    },
-    {
-      "name": "ramin rezai",
-      "number": "54-65-7890123",
-      "id": 8
-    },
-    {
-      "name": "ali sobhani",
-      "number": "30-20-3012516",
-      "id": 9
-    },
-    {
-      "name": "Nadder badri",
-      "number": "69-89-4440361",
-      "id": 10
     }
   ]
 }

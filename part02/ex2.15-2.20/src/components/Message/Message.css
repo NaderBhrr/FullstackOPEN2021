@@ -1,0 +1,21 @@
+.general {
+  background-color: lightgray;
+  font-weight: bold;
+  font-style: italic;
+  width: 30%;
+  padding: 4px;
+}
+.add {
+  color: green;
+  border: 2px solid green;
+}
+
+.update {
+  color: lightskyblue;
+  border: 2px solid lightskyblue;
+}
+
+.delete {
+  color: red;
+  border: 2px solid red;
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SearchPhonebook from './SearchPhonebook/SearchPhonebook';
 import ContactList from './ContactsList/ContactList';
 import AddContactForm from './AddContactForm/AddContactForm';
+import Message from './Message/Message';
 import phonebookRecerd from '../server/server';
 
 const App = () => {
@@ -9,10 +10,17 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newPhoneNumber, setNewPhoneNumber] = useState('');
   const [searchContact, setSearchContact] = useState({});
+  const [actionMessage, setActionMessage] = useState(null);
 
   useEffect(() => {
     phonebookRecerd.getPersons((data) => setPersons(data));
   }, []);
+
+  if (/[^\w\s]/g.test(newName)) {
+    alert(`${newName} is not a valid entry please try again`);
+    setNewName('');
+    setNewPhoneNumber('');
+  }
 
   const handleSearchPhonebook = (event) => {
     if (event.key === 'Enter') {
@@ -73,6 +81,13 @@ const App = () => {
           )
         );
 
+        setNewName('');
+        setNewPhoneNumber('');
+        setActionMessage('update');
+
+        setTimeout(() => {
+          setActionMessage(null);
+        }, 5000);
         return;
       } else {
         setNewName('');
@@ -97,6 +112,10 @@ const App = () => {
         setPersons(persons.concat(data));
         setNewName('');
         setNewPhoneNumber('');
+        setActionMessage('add');
+        setTimeout(() => {
+          setActionMessage(null);
+        }, 5000);
       }
     );
   };
@@ -114,6 +133,10 @@ const App = () => {
       phonebookRecerd.deletePerson(id, () => {
         phonebookRecerd.getPersons((data) => setPersons(data));
       });
+    setActionMessage('delete');
+    setTimeout(() => {
+      setActionMessage(null);
+    }, 5000);
 
     return;
   };
@@ -121,6 +144,7 @@ const App = () => {
   return (
     <div className='App'>
       <h2>Phonebook</h2>
+      <Message action={actionMessage} />
       <SearchPhonebook
         handleSearch={handleSearchPhonebook}
         searchContact={searchContact}

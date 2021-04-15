@@ -17,15 +17,18 @@ const SearchPhonebook = ({ handleSearch, searchContact }) => {
       <input
         type='search'
         name='search'
-        placeholder='Search a contact number'
+        placeholder='Search a contact'
         onKeyDown={handleSearch}
         onChange={handleSearchInput}
       />
       <span>
-        {/* {!searchInput && searchMessage[0]} */}
+        {/* Buga:
+        * When a search is done, and you clean the search input, if you hit any keyborad, 
+        still the "not found" message is shown
+        */}
         {searchContact.searchResult && searchInput
           ? `The contact you searched is found:\n ${searchContact.searchResult.name}`
-          : !searchContact.searchResult
+          : !searchContact.searchResult && searchInput
           ? searchMessage[2]
           : searchMessage[0]}
       </span>
