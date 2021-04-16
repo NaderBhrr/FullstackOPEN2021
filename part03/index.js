@@ -1,5 +1,6 @@
 import express from 'express';
 import cat from './cat.js';
+import echo from './echo.js';
 
 const PORT = process.env.PORT || 3001;
 
@@ -43,7 +44,9 @@ app.delete('/api/persons/:id', (req, res) => {
         (persons = persons.filter(
           (person) => person.id !== Number(idToDelete)
         )),
-        res.status(204).end());
+        echo('./db.json', JSON.stringify(persons)).then(() =>
+          res.status(204).end()
+        ));
   });
 });
 

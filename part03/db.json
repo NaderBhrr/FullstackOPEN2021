@@ -1,5 +1,4 @@
 [
-  { "id": 1, "name": "Torr Fearn", "number": "277-753-3043" },
   { "id": 2, "name": "Ring Gammett", "number": "706-253-7095" },
   { "id": 3, "name": "Gustie Wickens", "number": "401-478-9394" },
   { "id": 4, "name": "Valli Acome", "number": "324-259-4790" },
@@ -197,6 +196,5 @@
   { "id": 196, "name": "Maybelle Leggen", "number": "404-129-6192" },
   { "id": 197, "name": "Gardie Emmanuel", "number": "300-546-0632" },
   { "id": 198, "name": "Normie Andrelli", "number": "183-341-1839" },
-  { "id": 199, "name": "Duke Hinckes", "number": "989-307-9917" },
-  { "id": 200, "name": "Aurie Pyrke", "number": "770-909-9607" }
+  { "id": 199, "name": "Duke Hinckes", "number": "989-307-9917" }
 ]
