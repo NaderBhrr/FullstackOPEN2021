@@ -34,6 +34,19 @@ app.get('/info', (_req, res) => {
   });
 });
 
+app.delete('/api/persons/:id', (req, res) => {
+  const { id: idToDelete } = req.params;
+  cat('./db.json').then((persons) => {
+    persons.every((person) => person.id !== Number(idToDelete))
+      ? res.status(204).end()
+      : (console.log('contact is available to delete'),
+        (persons = persons.filter(
+          (person) => person.id !== Number(idToDelete)
+        )),
+        res.status(204).end());
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server started successfully on port: http://localhost:${PORT}`);
 });

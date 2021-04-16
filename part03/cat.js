@@ -8,7 +8,7 @@ const cat = async (fileName) => {
     const data = await readFile(filepath, 'utf-8');
     return JSON.parse(data.toString());
   } catch (error) {
-    console.error(error);
+    console.error('ERROR: \n', error);
   }
 };
 
