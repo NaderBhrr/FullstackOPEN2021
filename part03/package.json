@@ -1,0 +1,24 @@
+{
+  "name": "part03",
+  "version": "1.0.0",
+  "description": "Backend for the Phonebook Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NaderBhrr/FullstackOPEN2021.git"
+  },
+  "keywords": [
+    "Node.js",
+    "Express",
+    "REST"
+  ],
+  "author": "Nader Bahrami",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NaderBhrr/FullstackOPEN2021/issues"
+  },
+  "homepage": "https://github.com/NaderBhrr/FullstackOPEN2021#readme"
+}
