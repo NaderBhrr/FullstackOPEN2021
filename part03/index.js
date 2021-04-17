@@ -45,7 +45,7 @@ app.delete('/api/persons/:id', (req, res) => {
         (persons = persons.filter(
           (person) => person.id !== Number(idToDelete)
         )),
-        echo('./db.json', JSON.stringify(persons)).then(() =>
+        echo('./db.json', JSON.stringify(persons), () =>
           res.status(204).end()
         ));
   });
@@ -54,13 +54,28 @@ app.delete('/api/persons/:id', (req, res) => {
 const generateID = (threshold) =>
   Math.floor(Math.random() * threshold) + threshold;
 
+const addNewContact = (newContact, contacts) => {
+  contacts = contacts.concat(newContact);
+  return contacts;
+};
+
 app.post('/api/persons', (req, res) => {
-  // console.log('name' in person && 'number' in person);
   cat('./db.json').then((persons) => {
     const person = { ...req.body, id: generateID(persons.length) };
-    persons = persons.concat(person);
+    'name' in person &&
+    'number' in person &&
+    persons.every(
+      (contact) => contact.name.toLowerCase() !== person.name.toLowerCase()
+    )
+      ? echo('./db.json', JSON.stringify(addNewContact(person, persons)), () =>
+          res
+            .status(201)
+            .json({ message: 'Phonebook updated with new contact' })
+        )
+      : res
+          .status(403)
+          .json({ error: 'New contact information must be unique' });
   });
-  res.end();
 });
 
 app.listen(PORT, () => {
