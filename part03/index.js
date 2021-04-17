@@ -5,6 +5,7 @@ import echo from './echo.js';
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+app.use(express.json());
 
 app.get('/api/persons', (_req, res) => {
   cat('./db.json').then((persons) => res.json(persons));
@@ -48,6 +49,18 @@ app.delete('/api/persons/:id', (req, res) => {
           res.status(204).end()
         ));
   });
+});
+
+const generateID = (threshold) =>
+  Math.floor(Math.random() * threshold) + threshold;
+
+app.post('/api/persons', (req, res) => {
+  // console.log('name' in person && 'number' in person);
+  cat('./db.json').then((persons) => {
+    const person = { ...req.body, id: generateID(persons.length) };
+    persons = persons.concat(person);
+  });
+  res.end();
 });
 
 app.listen(PORT, () => {
