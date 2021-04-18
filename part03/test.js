@@ -1,9 +1,12 @@
 const john = { name: 'john dew', number: '987-987-9876' };
-const props = ['name', 'number'];
-const checkNewContact = ({ properties, newContact }) => {
-  const [name, number] = properties;
-  console.log(typeof name);
-  console.log(number);
+const props = ['name', 'number', 'age'];
+const checkNewContact = (requiredProps, newContact, contacts) => {
+  return (
+    requiredProps.every((prop) => prop in newContact) &&
+    contacts.every(
+      (contact) => contact.name.toLowerCase() !== newContact.name.toLowerCase()
+    )
+  );
 };
 
-checkNewContact({ props, john });
+console.log(checkNewContact(['name', 'number', 'age'], john));

@@ -1,4 +1,5 @@
 import express from 'express';
+import morgan from 'morgan';
 import cat from './cat.js';
 import echo from './echo.js';
 
@@ -6,6 +7,7 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 app.use(express.json());
+app.use(morgan('tiny'));
 
 app.get('/api/persons', (_req, res) => {
   cat('./db.json').then((persons) => res.json(persons));
