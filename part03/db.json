@@ -1,6 +1,4 @@
 [
-  { "id": 2, "name": "Ring Gammett", "number": "706-253-7095" },
-  { "id": 3, "name": "Gustie Wickens", "number": "401-478-9394" },
   { "id": 4, "name": "Valli Acome", "number": "324-259-4790" },
   { "id": 5, "name": "Moore Plenderleith", "number": "977-774-6998" },
   { "id": 6, "name": "Jerry Trubshaw", "number": "841-335-3442" },
@@ -208,6 +206,5 @@
   { "name": "Olivia stone", "number": "954-444-6617", "id": 292 },
   { "name": "Mahtab alamian", "number": "954-444-6617", "id": 368 },
   { "name": "Dennins morgan", "number": "954-444-6617", "id": 326 },
-  { "name": "Sadiq Omrani", "number": "951-693-3265", "id": 233 },
-  { "name": "David Attenborough", "number": "951-693-3265", "id": 412 }
+  { "name": "Andy corney", "number": "123-700-3265", "id": 380 }
 ]

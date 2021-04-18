@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import cat from './cat.js';
 import echo from './echo.js';
 
@@ -10,6 +11,7 @@ morgan.token('body', (req, res) => {
 });
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.use(
   morgan((tokens, req, res) => {
     return [
