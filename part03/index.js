@@ -3,11 +3,27 @@ import morgan from 'morgan';
 import cat from './cat.js';
 import echo from './echo.js';
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5000;
 
+morgan.token('body', (req, res) => {
+  return req.method === 'POST' ? JSON.stringify(req.body) : null;
+});
 const app = express();
 app.use(express.json());
-app.use(morgan('tiny'));
+app.use(
+  morgan((tokens, req, res) => {
+    return [
+      tokens.method(req, res),
+      tokens.url(req, res),
+      tokens.status(req, res),
+      tokens.res(req, res, 'content-length'),
+      '-',
+      tokens['response-time'](req, res),
+      'ms',
+      tokens.body(req, res),
+    ].join(' ');
+  })
+);
 
 app.get('/api/persons', (_req, res) => {
   cat('./db.json').then((persons) => res.json(persons));
