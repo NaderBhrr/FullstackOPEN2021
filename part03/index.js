@@ -82,23 +82,22 @@ app.delete('/api/persons/:id', (req, res) => {
   });
 });
 
-const generateID = (threshold) =>
-  Math.floor(Math.random() * threshold) + threshold;
+const addNewContact = (newPersonInfo) => {
+  const person = new Person(newPersonInfo);
 
-const addNewContact = (newContact, contacts) => {
-  contacts = contacts.concat(newContact);
-  return contacts;
+  return person.save();
 };
 
 app.post('/api/persons', (req, res) => {
-  cat('./db.json').then((persons) => {
-    const person = { ...req.body, id: generateID(persons.length) };
+  Person.find({}).then((persons) => {
+    const person = { ...req.body };
+
     'name' in person &&
     'number' in person &&
-    persons.every(
-      (contact) => contact.name.toLowerCase() !== person.name.toLowerCase()
+    !persons.some(
+      (contact) => contact.name.toLowerCase() === person.name.toLowerCase()
     )
-      ? echo('./db.json', JSON.stringify(addNewContact(person, persons)), () =>
+      ? addNewContact(person).then(() =>
           res
             .status(201)
             .json({ message: 'Phonebook updated with new contact' })
