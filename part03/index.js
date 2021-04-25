@@ -1,10 +1,16 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import { config } from 'dotenv';
 import cat from './cat.js';
 import echo from './echo.js';
+import connectDB from './db.js';
+import Person from './models/Person.js';
 
-const PORT = process.env.PORT || 5000;
+// Making the environment variables accessible
+config();
+// Start connection to database
+connectDB();
 
 morgan.token('body', (req, res) => {
   return req.method === 'POST' ? JSON.stringify(req.body) : null;
@@ -29,7 +35,11 @@ app.use(
 );
 
 app.get('/api/persons', (_req, res) => {
-  cat('./db.json').then((persons) => res.json(persons));
+  // cat('./db.json').then((persons) => res.json(persons));
+
+  Person.find({}).then((persons) => {
+    res.json(persons);
+  });
 });
 
 const respondNoContact = (message) =>
@@ -98,6 +108,8 @@ app.post('/api/persons', (req, res) => {
           .json({ error: 'New contact information must be unique' });
   });
 });
+
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
   console.log(`Server started successfully on port: http://localhost:${PORT}`);
