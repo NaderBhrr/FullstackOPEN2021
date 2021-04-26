@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { config } from 'dotenv';
 import cat from './cat.js';
-import echo from './echo.js';
+import cli from './utlis/cli.js';
 import connectDB from './db.js';
 import Person from './models/Person.js';
 
@@ -67,19 +67,27 @@ app.get('/info', (_req, res) => {
   });
 });
 
-app.delete('/api/persons/:id', (req, res) => {
+app.delete('/api/persons/:id', (req, res, next) => {
   const { id: idToDelete } = req.params;
-  cat('./db.json').then((persons) => {
-    persons.every((person) => person.id !== Number(idToDelete))
-      ? res.status(204).end()
-      : (console.log('contact is available to delete'),
-        (persons = persons.filter(
-          (person) => person.id !== Number(idToDelete)
-        )),
-        echo('./db.json', JSON.stringify(persons), () =>
-          res.status(204).end()
-        ));
-  });
+  cli('idToDelte', idToDelete);
+  Person.findByIdAndRemove(idToDelete)
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => next(error));
+
+  // cat('./db.json').then((persons) => {
+  //   persons.
+  //   every((person) => person.id !== Number(idToDelete))
+  //     ? res.status(204).end()
+  //     : (console.log('contact is available to delete'),
+  //       (persons = persons.filter(
+  //         (person) => person.id !== Number(idToDelete)
+  //       )),
+  //       echo('./db.json', JSON.stringify(persons), () =>
+  //         res.status(204).end()
+  //       ));
+  // });
 });
 
 const addNewContact = (newPersonInfo) => {
