@@ -47,15 +47,21 @@ const respondNoContact = (message) =>
     <h3>${message}</h3>
   </header>`;
 
-app.get('/api/persons/:id', (req, res) => {
+app.get('/api/persons/:id', (req, res, next) => {
   const { id } = req.params;
-  cat('./db.json').then((persons) => {
-    const person = persons.find((person) => person.id === Number(id));
 
+  Person.findById(id).then((person) => {
     person
       ? res.json(person)
       : res.status(422).end(respondNoContact('No Contact Found'));
   });
+  // cat('./db.json').then((persons) => {
+  //   const person = persons.find((person) => person.id === Number(id));
+
+  //   person
+  //     ? res.json(person)
+  //     : res.status(422).end(respondNoContact('No Contact Found'));
+  // });
 });
 
 app.get('/info', (_req, res) => {
