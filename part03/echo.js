@@ -12,3 +12,16 @@ const echo = (fileName, data, cb) => {
 };
 
 export default echo;
+
+// cat('./db.json').then((persons) => {
+//   persons.
+//   every((person) => person.id !== Number(idToDelete))
+//     ? res.status(204).end()
+//     : (console.log('contact is available to delete'),
+//       (persons = persons.filter(
+//         (person) => person.id !== Number(idToDelete)
+//       )),
+//       echo('./db.json', JSON.stringify(persons), () =>
+//         res.status(204).end()
+//       ));
+// });

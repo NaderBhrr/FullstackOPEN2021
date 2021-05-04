@@ -2,11 +2,10 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import { config } from 'dotenv';
-import cat from './cat.js';
 import cli from './utlis/cli.js';
 import connectDB from './db.js';
 import Person from './models/Person.js';
-
+import errorHandler from './middlewares/errorHandler.js';
 // Making the environment variables accessible
 config();
 // Start connection to database
@@ -34,34 +33,28 @@ app.use(
   })
 );
 
-app.get('/api/persons', (_req, res) => {
-  // cat('./db.json').then((persons) => res.json(persons));
-
-  Person.find({}).then((persons) => {
-    res.json(persons);
-  });
+app.get('/api/persons', (_req, res, next) => {
+  Person.find({})
+    .then((persons) => {
+      res.json(persons);
+    })
+    .catch((error) => next(error));
 });
 
 const respondNoContact = (message) =>
   `<header>
     <h3>${message}</h3>
   </header>`;
+// respondNoContact('No Contact Found')
 
 app.get('/api/persons/:id', (req, res, next) => {
   const { id } = req.params;
 
-  Person.findById(id).then((person) => {
-    person
-      ? res.json(person)
-      : res.status(422).end(respondNoContact('No Contact Found'));
-  });
-  // cat('./db.json').then((persons) => {
-  //   const person = persons.find((person) => person.id === Number(id));
-
-  //   person
-  //     ? res.json(person)
-  //     : res.status(422).end(respondNoContact('No Contact Found'));
-  // });
+  Person.findById(id)
+    .then((person) => {
+      person ? res.json(person) : res.status(404).end();
+    })
+    .catch((error) => next(error));
 });
 
 app.get('/info', (_req, res) => {
@@ -75,25 +68,12 @@ app.get('/info', (_req, res) => {
 
 app.delete('/api/persons/:id', (req, res, next) => {
   const { id: idToDelete } = req.params;
-  cli('idToDelte', idToDelete);
+
   Person.findByIdAndRemove(idToDelete)
     .then((result) => {
       console.log(result);
     })
     .catch((error) => next(error));
-
-  // cat('./db.json').then((persons) => {
-  //   persons.
-  //   every((person) => person.id !== Number(idToDelete))
-  //     ? res.status(204).end()
-  //     : (console.log('contact is available to delete'),
-  //       (persons = persons.filter(
-  //         (person) => person.id !== Number(idToDelete)
-  //       )),
-  //       echo('./db.json', JSON.stringify(persons), () =>
-  //         res.status(204).end()
-  //       ));
-  // });
 });
 
 const addNewContact = (newPersonInfo) => {
@@ -121,6 +101,8 @@ app.post('/api/persons', (req, res) => {
           .json({ error: 'New contact information must be unique' });
   });
 });
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 
