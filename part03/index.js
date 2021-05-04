@@ -46,36 +46,6 @@ const respondNoContact = (message) =>
     <h3>${message}</h3>
   </header>`;
 // respondNoContact('No Contact Found')
-
-app.get('/api/persons/:id', (req, res, next) => {
-  const { id } = req.params;
-
-  Person.findById(id)
-    .then((person) => {
-      person ? res.json(person) : res.status(404).end();
-    })
-    .catch((error) => next(error));
-});
-
-app.get('/info', (_req, res) => {
-  cat('./db.json').then((persons) => {
-    const info = `Phonebook has information for ${persons.length} people`;
-    const date = new Date();
-
-    res.end(`${info}\n${date}`);
-  });
-});
-
-app.delete('/api/persons/:id', (req, res, next) => {
-  const { id: idToDelete } = req.params;
-
-  Person.findByIdAndRemove(idToDelete)
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((error) => next(error));
-});
-
 const addNewContact = (newPersonInfo) => {
   const person = new Person(newPersonInfo);
 
@@ -99,6 +69,45 @@ app.post('/api/persons', (req, res) => {
       : res
           .status(403)
           .json({ error: 'New contact information must be unique' });
+  });
+});
+
+app.get('/api/persons/:id', (req, res, next) => {
+  const { id } = req.params;
+
+  Person.findById(id)
+    .then((person) => {
+      person ? res.json(person) : res.status(404).end();
+    })
+    .catch((error) => next(error));
+});
+
+app.put('/api/persons/:id', (req, res, next) => {
+  const { id: idToUpdate } = req.params.id;
+  const { number } = req.body;
+  const updatedPerson = { number };
+
+  Person.findByIdAndUpdate(idToUpdate, updatedPerson, { new: true })
+    .then((result) => res.json(result))
+    .catch((error) => next(error));
+});
+
+app.delete('/api/persons/:id', (req, res, next) => {
+  const { id: idToDelete } = req.params;
+
+  Person.findByIdAndRemove(idToDelete)
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => next(error));
+});
+
+app.get('/info', (_req, res) => {
+  Person.find({}).then((persons) => {
+    const info = `Phonebook currently has information for << ${persons.length} >> people.`;
+    const date = new Date();
+
+    res.end(`${info} \n\nRequest Date: ${date}`);
   });
 });
 

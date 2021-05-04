@@ -9,12 +9,17 @@ const connectDB = async () => {
       useCreateIndex: true,
     })
     .then((_result) => {
-      console.log(`Connection to database: Successful, \n
+      console.log(
+        `%c Connection to database: Successful, \n
     The database address: ${mongoose.connection.host}
-    `);
+    `
+      );
     })
     .catch((error) => {
       console.error(`Database Error: \n ${error.message}`);
+      setTimeout(() => {
+        console.log('connecting again');
+      }, 2000);
     });
 };
 

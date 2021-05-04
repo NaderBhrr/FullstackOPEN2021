@@ -1,5 +1,7 @@
 const errorHandler = (error, req, res, next) => {
-  console.dir(error.errors);
+  console.error(error.message);
+
+  console.log('Error Name: \n', error.name);
 
   next(error);
 };
