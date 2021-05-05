@@ -50,11 +50,11 @@ const App = () => {
   ];
 
   return (
-    <div className='App'>
+    <main className='App'>
       {courses.map((course) => (
         <Course key={course.id} course={course} />
       ))}
-    </div>
+    </main>
   );
 };
 
