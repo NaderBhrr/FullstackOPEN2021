@@ -3,7 +3,9 @@ import SearchPhonebook from './SearchPhonebook/SearchPhonebook';
 import ContactList from './ContactsList/ContactList';
 import AddContactForm from './AddContactForm/AddContactForm';
 import Message from './Message/Message';
-import phonebookRecerd from '../server/server';
+import phonebookCRUD from '../server/server';
+
+const { getPersons, addPerson, updatePerson, deletePerson } = phonebookCRUD;
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -14,9 +16,12 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
-    phonebookRecerd.getPersons((data) => setPersons(data));
-  }, []);
+    getPersons((data) => setPersons(data));
+  }, [actionMessage, errorMessage]);
 
+  /* 
+    - The problem with this regex is that is does not allow names with . e.g. thomas Jr.
+  */
   if (/[^\w\s]/g.test(newName)) {
     alert(`${newName} is not a valid entry please try again`);
     setNewName('');
@@ -56,11 +61,11 @@ const App = () => {
       return;
     }
     if (
-      !persons.every(
-        (person) => person.name.toLowerCase() !== newName.toLowerCase()
+      persons.some(
+        (person) => person.name.toLowerCase() === newName.toLowerCase()
       )
     ) {
-      if (!persons.every((person) => person.number !== newPhoneNumber)) {
+      if (persons.some((person) => person.number === newPhoneNumber)) {
         console.log('already true');
         alert(`${newName} already exists in the phonebook`);
         setNewName('');
@@ -68,7 +73,9 @@ const App = () => {
         return;
       }
       const updatedContact = {
-        ...persons.find((person) => person.name === newName),
+        ...persons.find(
+          (person) => person.name.toLowerCase() === newName.toLowerCase()
+        ),
         number: newPhoneNumber,
       };
       if (
@@ -76,11 +83,11 @@ const App = () => {
           `${updatedContact.name} is already added to the phonebook, do you want to update old number with a new number?`
         )
       ) {
-        phonebookRecerd.updatePerson(updatedContact, (data) =>
+        updatePerson(updatedContact, (data) => {
           setPersons(
-            persons.map((person) => (person.id === data.id ? data : person))
-          )
-        );
+            persons.map((person) => (person._id === data._id ? data : person))
+          );
+        });
 
         setNewName('');
         setNewPhoneNumber('');
@@ -104,7 +111,7 @@ const App = () => {
       )
     ) {
     }
-    phonebookRecerd.addPerson(
+    addPerson(
       {
         name: newName,
         number: newPhoneNumber,
@@ -121,7 +128,7 @@ const App = () => {
     );
   };
 
-  const handleNewContact = (event) => {
+  const handleNewPerson = (event) => {
     setNewName(event.target.value);
   };
 
@@ -129,12 +136,12 @@ const App = () => {
     setNewPhoneNumber(event.target.value);
   };
 
-  const handleDeleteContact = (id, person) => {
-    if (window.confirm(`Are you sure to detele the ${person}?`))
-      phonebookRecerd.deletePerson(
+  const handleDeletePerson = (id, person) => {
+    if (window.confirm(`Are you sure to delete ${person}?`))
+      deletePerson(
         id,
         () => {
-          phonebookRecerd.getPersons((data) => setPersons(data));
+          getPersons((data) => setPersons(data));
         },
         (error) => {
           setErrorMessage(`deleteError`);
@@ -165,11 +172,11 @@ const App = () => {
       <AddContactForm
         handleSubmit={handleSubmit}
         newName={newName}
-        handleNewContact={handleNewContact}
+        handleNewPerson={handleNewPerson}
         newPhoneNumber={newPhoneNumber}
         handleNewPhoneNumber={handleNewPhoneNumber}
       />
-      <ContactList persons={persons} deleteContact={handleDeleteContact} />
+      <ContactList persons={persons} deleteContact={handleDeletePerson} />
     </div>
   );
 };

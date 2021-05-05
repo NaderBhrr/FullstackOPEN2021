@@ -5,6 +5,14 @@
   width: 30%;
   padding: 4px;
 }
+
+.add,
+.update,
+.delete,
+.error {
+  border-radius: 3px;
+  text-align: center;
+}
 .add {
   color: green;
   border: 2px solid green;

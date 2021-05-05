@@ -7,7 +7,7 @@ const ContactList = ({ persons, deleteContact }) => (
       {persons.map((person, index) => (
         <li key={index}>
           {person.name} <div>&nbsp;{person.number}</div>{' '}
-          <button onClick={() => deleteContact(person.id, person.name)}>
+          <button onClick={() => deleteContact(person._id, person.name)}>
             Delete
           </button>
         </li>

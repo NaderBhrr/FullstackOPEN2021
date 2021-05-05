@@ -22,7 +22,7 @@ const SearchPhonebook = ({ handleSearch, searchContact }) => {
         onChange={handleSearchInput}
       />
       <span>
-        {/* Buga:
+        {/* Bugs:
         * When a search is done, and you clean the search input, if you hit any keyborad, 
         still the "not found" message is shown
         */}

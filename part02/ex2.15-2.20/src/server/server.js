@@ -1,11 +1,5 @@
 import axios from 'axios';
-const baseUrl = `http://localhost:3001/persons`;
-
-const getPersons = (cb) =>
-  axios
-    .get(baseUrl)
-    .then((response) => response.data)
-    .then(cb);
+const baseUrl = `/api/persons`;
 
 const addPerson = (newPerson, cb) =>
   axios
@@ -13,24 +7,30 @@ const addPerson = (newPerson, cb) =>
     .then((response) => response.data)
     .then(cb);
 
-const deletePerson = (contactID, cb, cbError) =>
+const getPersons = (cb) =>
   axios
-    .delete(`${baseUrl}/${contactID}`)
+    .get(baseUrl)
+    .then((response) => response.data)
+    .then(cb);
+
+const updatePerson = (updatedPerson, cb) =>
+  axios
+    .put(`${baseUrl}/${updatedPerson._id}`, updatedPerson)
+    .then((response) => response.data)
+    .then(cb);
+
+const deletePerson = (personId, cb, cbError) =>
+  axios
+    .delete(`${baseUrl}/${personId}`)
     .then((response) => response.data)
     .then(cb)
     .catch(cbError);
 
-const updatePerson = (updatedPerson, cb) =>
-  axios
-    .put(`${baseUrl}/${updatedPerson.id}`, updatedPerson)
-    .then((response) => response.data)
-    .then(cb);
-
-const phonebookRecerd = {
+const phonebookCRUD = {
   getPersons,
   addPerson,
   deletePerson,
   updatePerson,
 };
 
-export default phonebookRecerd;
+export default phonebookCRUD;

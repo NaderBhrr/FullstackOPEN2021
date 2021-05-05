@@ -8,8 +8,7 @@ const Message = ({ action, error }) => {
     CRUD: {
       addPerson: 'New contact is added to the phonebook',
       changeNumber: 'The contact phone number updated',
-      deletePerson:
-        'Contact successfully deleted from the phonebook successfully',
+      deletePerson: 'Contact successfully deleted from the phonebook.',
     },
     errors: {
       deletePerson: 'The contact is already removed from the phonebook',
