@@ -10,7 +10,7 @@ const connectDB = async () => {
     })
     .then((_result) => {
       console.log(
-        `%c Connection to database: Successful, \n
+        ` Connection to database: << SUCCESSFUL >> \n
     The database address: ${mongoose.connection.host}
     `
       );
