@@ -3,7 +3,10 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const personSchema = new Schema({
-  name: String,
+  name: {
+    type: String,
+    unique: true,
+  },
   number: String,
 });
 

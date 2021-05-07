@@ -33,43 +33,57 @@ app.use(
   })
 );
 
-app.get('/api/persons', (_req, res, next) => {
+const addNewContact = (newPersonInfo) => {
+  const person = new Person(newPersonInfo);
+  console.log(person);
+  return person.save();
+};
+
+const isPOSTRequestValid = (requestBody) => {
+  return 'name' in requestBody && 'number' in requestBody;
+};
+
+const isPersonUnique = (person, persons) =>
+  !persons.some(
+    (contact) => contact.name.toLowerCase() === person.name.toLowerCase()
+  );
+
+app.post('/api/persons', (req, res, next) => {
+  const person = { ...req.body };
+
+  if (!isPOSTRequestValid(person))
+    return res
+      .status(400)
+      .json({ error: 'Request can not be processed, missing information ' });
+
+  Person.find({}).then((persons) => {
+    try {
+      isPersonUnique(person, persons) &&
+        addNewContact(person).then((result) => console.log(result));
+    } catch (error) {
+      return next(error);
+    }
+
+    // !persons.some(
+    //   (contact) => contact.name.toLowerCase() === person.name.toLowerCase()
+    // )
+    //   ? addNewContact(person).then(() =>
+    //       res
+    //         .status(201)
+    //         .json({ message: 'Phonebook updated with new contact' })
+    //     )
+    //   : res
+    //       .status(400)
+    //       .json({ error: 'New contact information must be unique' });
+  });
+});
+
+app.get('/api/persons', (req, res, next) => {
   Person.find({})
     .then((persons) => {
       res.json(persons);
     })
     .catch((error) => next(error));
-});
-
-const respondNoContact = (message) =>
-  `<header>
-    <h3>${message}</h3>
-  </header>`;
-// respondNoContact('No Contact Found')
-const addNewContact = (newPersonInfo) => {
-  const person = new Person(newPersonInfo);
-
-  return person.save();
-};
-
-app.post('/api/persons', (req, res) => {
-  Person.find({}).then((persons) => {
-    const person = { ...req.body };
-
-    'name' in person &&
-    'number' in person &&
-    !persons.some(
-      (contact) => contact.name.toLowerCase() === person.name.toLowerCase()
-    )
-      ? addNewContact(person).then(() =>
-          res
-            .status(201)
-            .json({ message: 'Phonebook updated with new contact' })
-        )
-      : res
-          .status(403)
-          .json({ error: 'New contact information must be unique' });
-  });
 });
 
 app.get('/api/persons/:id', (req, res, next) => {
@@ -115,6 +129,14 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server started successfully on port: http://localhost:${PORT}`);
 });
+
+// process.on('unhandledRejection', (error, _promise) => {
+//   console.dir(error);
+//   console.log(`Rejection Error: \n ${error.message}`);
+
+//   // Close the server & Exit process
+//   server.close(() => process.exit(1));
+// });
