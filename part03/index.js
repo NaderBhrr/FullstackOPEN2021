@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import { config } from 'dotenv';
 import cli from './utlis/cli.js';
 import connectDB from './db.js';
+import * as api from './api.js';
 import Person from './models/Person.js';
 import errorHandler from './middlewares/errorHandler.js';
 // Making the environment variables accessible
@@ -87,61 +88,11 @@ app.post('/api/persons', (req, res, next) => {
   // });
 });
 
-const getPersons = async (req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  await Person.find({})
-    .then((persons) => {
-      res.json(persons);
-    })
-    .catch((error) => next(error));
-};
-app.get('/api/persons', getPersons);
-
-app.get('/api/persons/:id', (req, res, next) => {
-  const { id } = req.params;
-
-  Person.findById(id)
-    .then((person) => {
-      person ? res.json(person) : res.status(404).end();
-    })
-    .catch((error) => next(error));
-});
-
-app.put('/api/persons/:id', (req, res, next) => {
-  const { id: idToUpdate } = req.params.id;
-  const { number } = req.body;
-  const updatedPerson = { number };
-
-  Person.findByIdAndUpdate(idToUpdate, updatedPerson, { new: true })
-    .then((result) => res.json(result))
-    .catch((error) => next(error));
-});
-
-const deletePerson = async (req, res, next) => {
-  const { id: idToDelete } = req.params;
-
-  await Person.findByIdAndRemove(idToDelete)
-    .then((result) => {
-      res.status(200).send('Contact successfully deleted');
-    })
-    .catch((error) => next(error));
-};
-
-app.delete('/api/persons/:id', deletePerson);
-
-const showInfo = async (req, res, next) => {
-  await Person.find({})
-    .then((persons) => {
-      const info = `Phonebook currently has information for << ${persons.length} >> people.`;
-      const date = new Date();
-
-      res.end(`${info} \n\nRequest Date: ${date}`);
-    })
-    .catch((error) => next(error));
-};
-
-app.get('/info', showInfo);
-
+app.get('/api/persons', api.getPersons);
+app.get('/api/persons/:id', api.getPerson);
+app.put('/api/persons/:id', api.updatePerson);
+app.delete('/api/persons/:id', api.deletePerson);
+app.get('/info', api.showInfo);
 app.use(errorHandler);
 
 const PORT = process.env.PORT;
