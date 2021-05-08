@@ -1,12 +1,15 @@
 const errorHandler = (error, req, res, next) => {
   console.error(error.message);
-  console.log(req);
   console.log('Error Name: \n', error.name);
 
   if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'malformatted id' });
+    return res.status(400).send({ error: 'malformatted id' });
   } else if (error.name === 'ValidationError') {
-    return response.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
+  } else {
+    res
+      .status(400)
+      .json({ error: 'Request can not be processed, missing information ' });
   }
 
   next(error);

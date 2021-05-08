@@ -1,6 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
-import cors from 'cors';
+// import cors from 'cors';
 import { config } from 'dotenv';
 import cli from './utlis/cli.js';
 import connectDB from './db.js';
@@ -16,7 +16,7 @@ morgan.token('body', (req, res) => {
 });
 const app = express();
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 app.use(express.static('build'));
 app.use(
   morgan((tokens, req, res) => {
@@ -35,7 +35,6 @@ app.use(
 
 const addNewContact = (newPersonInfo) => {
   const person = new Person(newPersonInfo);
-  console.log(person);
   return person.save();
 };
 
@@ -51,40 +50,52 @@ const isPersonUnique = (person, persons) =>
 app.post('/api/persons', (req, res, next) => {
   const person = { ...req.body };
 
-  if (!isPOSTRequestValid(person))
-    return res
-      .status(400)
-      .json({ error: 'Request can not be processed, missing information ' });
+  // Working logic
+  // ---------------------------------------
+  // if (!isPOSTRequestValid(person))
+  //   res
+  //     .status(400)
+  //     .json({ error: 'missing required information on the request' });
 
-  Person.find({}).then((persons) => {
-    try {
+  // addNewContact(person)
+  //   .then((result) => console.log(result))
+  //   .catch((error) => next(error));
+
+  // ---------------------------------------
+
+  Person.find({})
+    .then((persons) => {
       isPersonUnique(person, persons) &&
-        addNewContact(person).then((result) => console.log(result));
-    } catch (error) {
-      return next(error);
-    }
-
-    // !persons.some(
-    //   (contact) => contact.name.toLowerCase() === person.name.toLowerCase()
-    // )
-    //   ? addNewContact(person).then(() =>
-    //       res
-    //         .status(201)
-    //         .json({ message: 'Phonebook updated with new contact' })
-    //     )
-    //   : res
-    //       .status(400)
-    //       .json({ error: 'New contact information must be unique' });
-  });
+        addNewContact(person)
+          .then((result) => {
+            res.status(200).send('Contact added');
+          })
+          .catch((error) => next(error));
+    })
+    .catch((error) => next(error));
+  // !persons.some(
+  //   (contact) => contact.name.toLowerCase() === person.name.toLowerCase()
+  // )
+  //   ? addNewContact(person).then(() =>
+  //       res
+  //         .status(201)
+  //         .json({ message: 'Phonebook updated with new contact' })
+  //     )
+  //   : res
+  //       .status(400)
+  //       .json({ error: 'New contact information must be unique' });
+  // });
 });
 
-app.get('/api/persons', (req, res, next) => {
-  Person.find({})
+const getPersons = async (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  await Person.find({})
     .then((persons) => {
       res.json(persons);
     })
     .catch((error) => next(error));
-});
+};
+app.get('/api/persons', getPersons);
 
 app.get('/api/persons/:id', (req, res, next) => {
   const { id } = req.params;
@@ -106,24 +117,30 @@ app.put('/api/persons/:id', (req, res, next) => {
     .catch((error) => next(error));
 });
 
-app.delete('/api/persons/:id', (req, res, next) => {
+const deletePerson = async (req, res, next) => {
   const { id: idToDelete } = req.params;
 
-  Person.findByIdAndRemove(idToDelete)
+  await Person.findByIdAndRemove(idToDelete)
     .then((result) => {
-      console.log(result);
+      res.status(200).send('Contact successfully deleted');
     })
     .catch((error) => next(error));
-});
+};
 
-app.get('/info', (_req, res) => {
-  Person.find({}).then((persons) => {
-    const info = `Phonebook currently has information for << ${persons.length} >> people.`;
-    const date = new Date();
+app.delete('/api/persons/:id', deletePerson);
 
-    res.end(`${info} \n\nRequest Date: ${date}`);
-  });
-});
+const showInfo = async (req, res, next) => {
+  await Person.find({})
+    .then((persons) => {
+      const info = `Phonebook currently has information for << ${persons.length} >> people.`;
+      const date = new Date();
+
+      res.end(`${info} \n\nRequest Date: ${date}`);
+    })
+    .catch((error) => next(error));
+};
+
+app.get('/info', showInfo);
 
 app.use(errorHandler);
 
@@ -133,10 +150,10 @@ const server = app.listen(PORT, () => {
   console.log(`Server started successfully on port: http://localhost:${PORT}`);
 });
 
-// process.on('unhandledRejection', (error, _promise) => {
-//   console.dir(error);
-//   console.log(`Rejection Error: \n ${error.message}`);
+process.on('unhandledRejection', (error, _promise) => {
+  console.dir(error);
+  console.log(`Rejection Error: \n ${error.message}`);
 
-//   // Close the server & Exit process
-//   server.close(() => process.exit(1));
-// });
+  // Close the server & Exit process
+  server.close(() => process.exit(1));
+});
