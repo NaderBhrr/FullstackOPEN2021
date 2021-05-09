@@ -1,9 +1,11 @@
 const errorHandler = (error, req, res, next) => {
-  console.error(error.message);
+  console.error('Error MESSAGE: \n', error.message);
   console.log('Error Name: \n', error.name);
 
+  if (res.headersSent) return next(error);
+
   if (error.name === 'CastError') {
-    return res.status(400).send({ error: 'malformatted id' });
+    return res.status(400).json({ error: 'malformatted id' });
   } else if (error.name === 'ValidationError') {
     return res.status(400).json({ error: error.message });
   } else {
