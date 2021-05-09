@@ -1,10 +1,24 @@
-body {
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+body {
+  color: white;
+  --global-margin: 1em 0;
+  --global-padding: 1em;
+  --global-border: 0.2em solid white;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: lightslategrey;
 }
 
 code {

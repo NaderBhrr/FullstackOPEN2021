@@ -1,0 +1,20 @@
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+ul li {
+  display: flex;
+  justify-content: space-between;
+  background-color: darkgrey;
+  margin: 0.2em 0;
+  padding: 0.35em;
+  font-size: calc(0.6rem + 1vw);
+}
+
+.contact-list {
+  border: var(--global-border);
+  border-radius: 0.3em;
+  padding: 1em 2em;
+}

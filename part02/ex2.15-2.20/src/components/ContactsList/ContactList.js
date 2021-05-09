@@ -1,8 +1,8 @@
 import React from 'react';
-
+import './ContactList.css';
 const ContactList = ({ persons, deleteContact }) => (
-  <div>
-    <h2>Contact Information:</h2>
+  <div className='contact-list'>
+    <h3>Contact Information:</h3>
     <ul>
       {persons.map((person, index) => (
         <li key={index}>

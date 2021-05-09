@@ -4,6 +4,7 @@ import ContactList from './ContactsList/ContactList';
 import AddContactForm from './AddContactForm/AddContactForm';
 import Message from './Message/Message';
 import phonebookCRUD from '../server/server';
+import './App.css';
 
 const { getPersons, addPerson, updatePerson, deletePerson } = phonebookCRUD;
 
@@ -72,7 +73,7 @@ const App = () => {
         setNewPhoneNumber('');
         return;
       }
-      const updatedContact = {
+      const updatedPerson = {
         ...persons.find(
           (person) => person.name.toLowerCase() === newName.toLowerCase()
         ),
@@ -80,14 +81,14 @@ const App = () => {
       };
       if (
         window.confirm(
-          `${updatedContact.name} is already added to the phonebook, do you want to update old number with a new number?`
+          ` " ${updatedPerson.name} " is already added to the phonebook, do you want to update old number with a new number?`
         )
       ) {
-        updatePerson(updatedContact, (data) => {
+        updatePerson(updatedPerson, (data) => {
           setPersons(
             persons.map((person) => (person._id === data._id ? data : person))
           );
-        });
+        }).catch((error) => console.log(error));
 
         setNewName('');
         setNewPhoneNumber('');
@@ -104,9 +105,9 @@ const App = () => {
     }
 
     if (
-      !persons.every(
+      !persons.some(
         (person) =>
-          person.name.toLowerCase() !== newName.toLowerCase() &&
+          person.name.toLowerCase() === newName.toLowerCase() &&
           person.number === newPhoneNumber
       )
     ) {
@@ -125,7 +126,15 @@ const App = () => {
           setActionMessage(null);
         }, 5000);
       }
-    );
+    ).catch((error) => {
+      setErrorMessage('minLengthError');
+      setActionMessage('validate');
+
+      setTimeout(() => {
+        setActionMessage(null);
+        setErrorMessage(null);
+      }, 3500);
+    });
   };
 
   const handleNewPerson = (event) => {
@@ -138,25 +147,22 @@ const App = () => {
 
   const handleDeletePerson = (id, person) => {
     if (window.confirm(`Are you sure to delete ${person}?`))
-      deletePerson(
-        id,
-        () => {
-          getPersons((data) => setPersons(data));
-        },
-        (error) => {
-          setErrorMessage(`deleteError`);
-          setPersons(persons.filter((person) => person.id !== id));
-          console.error(error.message);
+      deletePerson(id, () => {
+        getPersons((data) => setPersons(data));
+      }).catch((error) => {
+        setErrorMessage(`deleteError`);
+        setPersons(persons.filter((person) => person.id !== id));
+        console.error(error.message);
 
-          setTimeout(() => {
-            setActionMessage(null);
-          }, 5000);
-        }
-      );
+        setTimeout(() => {
+          setActionMessage(null);
+        }, 5000);
+      });
+
     setActionMessage('delete');
     setTimeout(() => {
       setActionMessage(null);
-    }, 5000);
+    }, 3000);
 
     return;
   };

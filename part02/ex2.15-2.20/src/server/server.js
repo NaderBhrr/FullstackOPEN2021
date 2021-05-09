@@ -16,15 +16,17 @@ const getPersons = (cb) =>
 const updatePerson = (updatedPerson, cb) =>
   axios
     .put(`${baseUrl}/${updatedPerson._id}`, updatedPerson)
-    .then((response) => response.data)
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
     .then(cb);
 
-const deletePerson = (personId, cb, cbError) =>
+const deletePerson = (personId, cb) =>
   axios
     .delete(`${baseUrl}/${personId}`)
     .then((response) => response.data)
-    .then(cb)
-    .catch(cbError);
+    .then(cb);
 
 const phonebookCRUD = {
   getPersons,

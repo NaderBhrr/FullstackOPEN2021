@@ -18,7 +18,7 @@ const AddContactForm = ({ ...props }) => {
               placeholder='e.g. Tom Cruise'
               aria-required={true}
               autoFocus
-              pattern='^([\D]{2,30}\s+)+([a-zA-Z]{2,30})$'
+              // pattern='^([\D]{2,30}\s+)+([a-zA-Z]{2,30})$'
             />
             <label htmlFor='new-contact'>Name:</label>
           </div>
