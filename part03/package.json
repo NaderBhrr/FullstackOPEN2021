@@ -13,7 +13,7 @@
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf build && cd ../../FullStackOpen2021/part02/ex2.15-2.20/ && npm run build --prod && cp -r build ../../../FullStackOpen2021-server/part03/",
-    "deploy": "git push heroku master",
+    "deploy": "git push heroku part3-server",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
     "logs:prod": "heroku logs --tail"
   },
