@@ -16,3 +16,8 @@ A valid HTTP status code depends on what happened. Here’s a list of common err
 - 403 Forbidden Error: Used when user is not allowed access the endpoint.
 - 404 Not Found Error: Used when the endpoint cannot be found.
 - 500 Internal Server Error: Used the request sent by the frontend is correct, but there was an error from the backend.
+
+### Notes:
+
+- Always makes sure that you are on the `master` branch when merging branches before depolying to heroku
+  > I made commits and merges on the part3-server branch, so when I deployed to heroku no changes > where made there

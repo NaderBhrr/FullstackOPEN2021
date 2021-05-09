@@ -1,15 +1,12 @@
 import express from 'express';
 // import cors from 'cors';
-import { config } from 'dotenv';
 import cli from './utlis/cli.js';
-import connectDB from './db.js';
+import { PORT } from './utlis/config.js';
+import connectDB from './utlis/db.js';
 import * as api from './api.js';
 import corss from './middlewares/corss.js';
 import errorHandler from './middlewares/errorHandler.js';
 import logger from './middlewares/logger.js';
-
-// Making the environment variables accessible
-config();
 // Start connection to database
 connectDB();
 
@@ -27,8 +24,6 @@ app.delete('/api/persons/:id', api.deletePerson);
 app.get('/info', api.showInfo);
 
 app.use(errorHandler);
-
-const PORT = process.env.PORT;
 
 const server = app.listen(PORT, () => {
   console.log(`Server started successfully on port: http://localhost:${PORT}`);
