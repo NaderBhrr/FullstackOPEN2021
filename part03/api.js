@@ -1,7 +1,30 @@
 import Person from './models/Person.js';
 
+const isPOSTRequestValid = (requestBody) =>
+  'name' in requestBody && 'number' in requestBody;
+
+const addNewContact = (newPersonInfo) => {
+  const person = new Person(newPersonInfo);
+  return person.save();
+};
+
+export const createPerson = async (req, res, next) => {
+  const person = { ...req.body };
+
+  if (!isPOSTRequestValid(person))
+    res
+      .status(400)
+      .json({ error: 'missing required information on the request' });
+
+  await addNewContact(person)
+    .then((result) => {
+      console.log(result);
+      res.status(200).json({ message: 'Success data import to database' });
+    })
+    .catch((error) => next(error));
+};
+
 export const getPersons = async (req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
   await Person.find({})
     .then((persons) => {
       res.json(persons);
@@ -34,7 +57,7 @@ export const deletePerson = async (req, res, next) => {
 
   await Person.findByIdAndRemove(idToDelete)
     .then((result) => {
-      res.status(200).send('Contact successfully deleted');
+      res.status(200).json({ message: 'Contact successfully deleted', result });
     })
     .catch((error) => next(error));
 };
